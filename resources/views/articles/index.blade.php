@@ -30,7 +30,10 @@
             {{ $article->title }}
           </h3>
           <div class="card-text">
-            {{ e($article->body) }}
+            {{-- e($article->body)で、body内の改行タグをエスケープする --}}
+            {{-- nl2br()で改行を<br>に置き換える --}}
+            {{-- {!! !!}で、<br>だけエスケープをせずに出力する --}}
+            {!! nl2br(e( $article->body )) !!}
           </div>
         </div>
       @endforeach
