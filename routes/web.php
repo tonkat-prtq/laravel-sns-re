@@ -1,5 +1,7 @@
 <?php
 
+Auth::routes();
+
 // Railsのconfig/routes.rbのようなもの
 
 Route::get('/', 'ArticleController@index');
