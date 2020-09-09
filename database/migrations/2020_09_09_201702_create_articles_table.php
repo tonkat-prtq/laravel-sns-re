@@ -15,6 +15,15 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('body');
+            $table->bigInteger('user_id');
+            // user_idというカラムを作成
+            // foreignオプションで外部キー制約をつける
+            // onで参照するテーブルを指定(ここではusers)
+            // referencesで参照するカラムを指定(ここではid)
+            // つまり、articlesテーブルのuser_idカラムは、usersテーブルのidカラムを参照する、という制約を設けている
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
