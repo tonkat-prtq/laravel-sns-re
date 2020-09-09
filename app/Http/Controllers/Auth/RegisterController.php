@@ -47,10 +47,10 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data) // バリデーションの内容。ここを変更することでかけたいバリデーションの追加/変更/削除ができる
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users'], // alpha_numで英数字であるかをチェック
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
