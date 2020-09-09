@@ -6,6 +6,8 @@
 
 {{-- @yield('content')に対応し、@endsectionまでのコードが代入される --}}
 @section('content')
+  {{-- includeでnav.blade.phpを取り込んでいる --}}
+  @include('nav')
   <div class="container">
     <div class="card mt-3">
       {{-- Railsでいう articles.each do |article| --}}
