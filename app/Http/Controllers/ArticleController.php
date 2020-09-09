@@ -7,37 +7,18 @@
 
 
 namespace App\Http\Controllers;
-
+use App\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
     public function index() // 以下、indexアクションメソッドの中身
-    {
-        $articles = [
-            (object)[
-                'id' => 1,
-                'title' => 'タイトル1',
-                'body' => '本文1',
-                'created_at' => now(),
-                'user' => (object)[
-                    'id' => 1,
-                    'name' => 'ユーザー名1'
-                ],
-            ],
-            // (object)は型キャスト
-            // 配列をオブジェクト型に変換している
-            (object)[
-                'id' => 2,
-                'title' => 'タイトル2',
-                'body' => '本文2',
-                'created_at' => now(),
-                'user' => (object)[
-                    'id' => 2,
-                    'name' => 'ユーザー名2',
-                ],
-            ],
-        ];
+    {   
+        // Railsで言う、@logs = logs.all.order(created_at: :desc)
+        // YWT Questでは並び替え用のメソッドはモデルのscopeに記述してた
+        // allメソッドはモデルが持つクラスメソッドで、モデルの全データをコレクションで返す
+        // Laravelの場合、sortByDescはコレクションのメソッド
+        $articles = Article::all()->sortByDesc('created_at');
 
         return view('articles.index', ['articles' => $articles]);
         // view('第一引数', ['第二引数'])
