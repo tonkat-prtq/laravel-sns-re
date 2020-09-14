@@ -48,10 +48,16 @@ class ArticleController extends Controller
     // Laravelのコントローラはメソッドの引数で型宣言を行うと、そのクラスのインスタンスが自動で生成されてメソッド内で使えるようになる
     // 依存している度合いを下げている
     {
-        $article->title = $request->title;
-        $article->body = $request->body;
+        // $article->title = $request->title;
+        // $article->body = $request->body;
         // Articleモデルのインスタンスである$articleのtitleとbodyに対し、
         // 記事登録画面から送信されたPOSTリクエストのbody部のタイトルと本文の値をそれぞれ代入している
+
+        $article->fill($request->all());
+        // articleモデルのfillableプロパティ内に指定しておいたプロパティ(title, body)が$articleの各プロパティに代入され
+        // 上の2行のような記述が不要になる
+        // また、不正なリクエストへの対策となる
+        // strong parameter的な感じ
 
         $article->user_id = $request->user()->id;
         // user()メソッドを使うことでUserクラスのインスタンスにアクセスできるので、そこからuser.idを取得してArticleのuser_idに代入している
