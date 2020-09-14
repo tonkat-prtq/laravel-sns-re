@@ -10,6 +10,8 @@ Route::get('/', 'ArticleController@index')->name('articles.index');
 // ('ArticleController@index') <- 第二引数には、どのコントローラで何のメソッドを実行するのかを文字列で渡す
 // ArticleControllerがコントローラの名前
 // indexがアクションメソッド名(xRailsで言うアクション名)
+// ->name で名前をつけている
 
-// Railsでいう resources :articles
 Route::resource('/articles', 'ArticleController')->except(['index']);
+// Railsでいう resources :articles
+// ->except でカッコ内のアクションに対応するルーティングが作られないようにしている
