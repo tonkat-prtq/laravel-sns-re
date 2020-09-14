@@ -4,7 +4,7 @@ Auth::routes();
 
 // Railsのconfig/routes.rbのようなもの
 
-Route::get('/', 'ArticleController@index');
+Route::get('/', 'ArticleController@index')->name('articles.index');
 
 // ('/') <- 第一引数にはURLを文字列で渡す
 // ('ArticleController@index') <- 第二引数には、どのコントローラで何のメソッドを実行するのかを文字列で渡す
@@ -12,4 +12,4 @@ Route::get('/', 'ArticleController@index');
 // indexがアクションメソッド名(xRailsで言うアクション名)
 
 // Railsでいう resources :articles
-Route::resource('/articles', 'ArticleController');
+Route::resource('/articles', 'ArticleController')->except(['index']);
