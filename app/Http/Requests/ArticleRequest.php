@@ -24,7 +24,7 @@ class ArticleRequest extends FormRequest
     public function rules() // バリデーションのルールを設定
     {
         return [
-            'titile' => 'required|max:55', // ['required', 'max:50']でも可
+            'title' => 'required|max:55', // ['required', 'max:50']でも可
             'body' => 'required|Max:500',
         ];
     }

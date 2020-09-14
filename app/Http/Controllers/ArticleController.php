@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 use App\Article;
+use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -34,5 +35,28 @@ class ArticleController extends Controller
     public function create()
     {
         return view('articles.create');
+    }
+
+    public function store(ArticleRequest $request, Article $article)
+    // (ArticleRequest $request, Article $article)
+    // 第一引数 $request, 第二引数 $article
+    // その手前のArticleRequestやArticleは、そのクラスのインスタンスであるということを宣言している
+    // もしもstoreメソッドの該当する引数に、それ以外のインスタンスが渡されると、TypeErrorが発生して処理が中断する
+
+    // また、DI(Dependency Injection)の意味もある
+    // 訳：依存性の注入
+    // Laravelのコントローラはメソッドの引数で型宣言を行うと、そのクラスのインスタンスが自動で生成されてメソッド内で使えるようになる
+    // 依存している度合いを下げている
+    {
+        $article->title = $request->title;
+        $article->body = $request->body;
+        // Articleモデルのインスタンスである$articleのtitleとbodyに対し、
+        // 記事登録画面から送信されたPOSTリクエストのbody部のタイトルと本文の値をそれぞれ代入している
+
+        $article->user_id = $request->user()->id;
+        // user()メソッドを使うことでUserクラスのインスタンスにアクセスできるので、そこからuser.idを取得してArticleのuser_idに代入している
+        $article->save();
+        // モデルのsaveメソッドを使ってレコードを新規登録
+        return redirect()->route('articles.index');
     }
 }
