@@ -30,4 +30,9 @@ class ArticleController extends Controller
         // その中身は $articles(このファイルで定義しているもの)
     
     }
+
+    public function create()
+    {
+        return view('articles.create');
+    }
 }
