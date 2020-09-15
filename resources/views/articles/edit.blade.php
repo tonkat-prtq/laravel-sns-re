@@ -13,7 +13,11 @@
             @include('error_card_list')
             <div class="card-text">
               <form method="POST" action="{{ route('articles.update', ['article' => $article]) }}">
+              {{-- formのアクションタグに route('articles.update')と書き記事更新処理のURLを指定し、第二引数['article' => $article]で、ルーティングのパラメーターを渡している --}}
+              {{-- URIのarticleの部分に$articleのパラメータを渡す感じ。$articleにはid以外の情報も入っているがそこはLaravelが自動で識別して補完してくれる --}}
                 @method('PATCH')
+                {{-- HTMLのformタグは、PUTメソッドやPATCHメソッドをサポートしていない(DELETEメソッドもサポートしていない) --}}
+                {{-- LaravelのBladeでPATCHメソッド等を使う場合は、formタグでは属性をPOSTのままとしつつ、@methodでPATCHメソッド等を指定する --}}
                 @include('articles.form')
                 <button type="submit" class="btn blue-gradient btn-block">更新する</button>
               </form>
