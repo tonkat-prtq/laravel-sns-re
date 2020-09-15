@@ -9,14 +9,12 @@
   {{-- includeでnav.blade.phpを取り込んでいる --}}
   @include('nav')
   <div class="container">
-    <div class="card mt-3">
-      {{-- Railsでいう articles.each do |article| --}}
-      @foreach($articles as $article)
-        @include('articles.card')
-        {{-- cardを読み込んで記事一覧の表示を実装 --}}
-        {{-- foreachで$articles(すべての記事)を1件ずつ$articleに代入しているため --}}
-        {{-- card.blade.php内で$articleが使え、その中には記事1件の情報が入っている --}}
-      @endforeach
-    </div>
+    {{-- Railsでいう articles.each do |article| --}}
+    @foreach($articles as $article)
+      @include('articles.card')
+      {{-- cardを読み込んで記事一覧の表示を実装 --}}
+      {{-- foreachで$articles(すべての記事)を1件ずつ$articleに代入しているため --}}
+      {{-- card.blade.php内で$articleが使え、その中には記事1件の情報が入っている --}}
+    @endforeach
   </div>
 @endsection
