@@ -65,4 +65,10 @@ class ArticleController extends Controller
         // モデルのsaveメソッドを使ってレコードを新規登録
         return redirect()->route('articles.index');
     }
+
+    public function edit(Article $article)
+    {
+        return view('articles.edit', ['article' => $article]);
+    }
+    
 }
