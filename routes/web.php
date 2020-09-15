@@ -12,8 +12,11 @@ Route::get('/', 'ArticleController@index')->name('articles.index');
 // indexがアクションメソッド名(xRailsで言うアクション名)
 // ->name で名前をつけている
 
-Route::resource('/articles', 'ArticleController')->except(['index'])->middleware('auth');
+Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
 // Railsでいう resources :articles
 // ->except でカッコ内のアクションに対応するルーティングが作られないようにしている
 // middlewareでログイン時のみ投稿リンク表示を実現
 // authミドルウェアは、コントローラでリクエストを処理する前に、ユーザー名がログイン済みであるかどうかをチェックし、なければログイン画面へリダイレクト
+
+Route::resource('/articles', 'ArticleController')->only(['show']);
+// onlyを繋げるとそのアクションのみ指定することができる、Railsのonlyと同じ感じ
