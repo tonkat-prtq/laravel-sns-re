@@ -3,10 +3,15 @@
     <i class="fas fa-user-circle fa-3x mr-1"></i>
     <div>
       <div class="font-weight-bold">{{ $article->user->name }}</div>
+      {{-- コントローラからbladeに渡された変数は{{ }} ←マスタッシュ で値を表示できる --}}
+      {{-- Railsでいう、article.user.name --}}
       <div class="font-weight-lighter">{{ $article->created_at->format('Y/m/d H:i') }}</div>
+      {{-- Railsでいう、article.created_at.strftime('%Y/%m/%d %H:%i') --}}
+      {{-- Laravelでは ->format で日付時刻のフォーマットを変更できる --}}
     </div>
 
   @if( Auth::id() === $article->user_id )
+  {{-- 記事ごとの更新/削除メニューは、その記事を投稿したユーザーにのみ表示する必要がある --}}
     <!-- dropdown -->
       <div class="ml-auto card-text">
         <div class="dropdown">
