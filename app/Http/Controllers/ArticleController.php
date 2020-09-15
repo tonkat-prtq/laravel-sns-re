@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    // 新しくオブジェクトが生成されるたびにこのメソッドを呼び出す
+    public function __construct()
+    {
+        $this->authorizeResource(Article::class, 'article');
+    }
+
     public function index() // 以下、indexアクションメソッドの中身
     {   
         // Railsで言う、@logs = logs.all.order(created_at: :desc)
