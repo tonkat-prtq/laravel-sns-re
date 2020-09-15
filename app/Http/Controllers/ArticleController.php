@@ -67,8 +67,13 @@ class ArticleController extends Controller
     }
 
     public function edit(Article $article)
+    // storeアクションメソッドと同じようにDI(Dependency Injection)をしているが、
+    // editアクションメソッドの場合、$articleには、呼び出された時のURIが例えば
+    // articles/3/edit であれば、idが3であるArticleモデルのインスタンスが代入される
+
     {
         return view('articles.edit', ['article' => $article]);
     }
+
     
 }
