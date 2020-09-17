@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Mail\BareMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -22,7 +23,7 @@ class PasswordResetNotification extends Notification
      */
 
      // コンストラクタで、$tokenと$mailをそれぞれ先のプロパティに代入
-    public function __construct(string $token, Baremail $mail)
+    public function __construct(string $token, BareMail $mail)
     {
         $this->token = $token;
         $this->mail = $mail;
@@ -74,7 +75,7 @@ class PasswordResetNotification extends Notification
                     config('auth.defaults.passwords').
                     '.expire'
                 ),
-            ])
+            ]);
     }
 
     /**
