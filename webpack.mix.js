@@ -11,5 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+// resources/js/app.jsがトランスパイルされて、トランスパイル後のファイルがpublic/jsディレクトリに同じapp.jsというファイル名で保存される
+// ブラウザに実際に読み込ませて使うJavaScriptは、public/js/app.jsのほうになる
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .version();
