@@ -55,6 +55,13 @@ class Article extends Model
             // $thisにはArticleのインスタンスが入っている?
             ? (bool)$this->likes->where('id', $user->id)->count()
             : false;
+    }
 
+    public function getCountLikesAttributes(): int
+    {
+        // likesメソッドで紐付いているユーザーモデルがコレクションで返る
+        // この記事にいいねをしたユーザーの数をcountを使って数える
+        // これによりいいねの合計が求まる
+        return $this->likes->count();
     }
 }
