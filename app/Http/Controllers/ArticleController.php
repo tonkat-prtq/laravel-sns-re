@@ -97,4 +97,29 @@ class ArticleController extends Controller
     {
         return view('articles.show', ['article' => $article]);
     }
+
+    // いいねをするメソッド
+    public function like(Request $request, Article $article)
+    {
+        // detachメソッドで最初に削除することで、いいねの多重登録を避ける
+        $article->likes()->detach($request->user()->id);
+        // attachメソッドで新規登録する
+        $article->likes()->attach($request->user()->id);;
+
+        return [
+            'id' => $article->id,
+            'countLikes' => $article->count_likes,
+        ];
+    }
+
+    // いいねを外すメソッド
+    public function unlike(Request $request, Article $article)
+    {
+        $article->likes()->detach($request->user()->id);
+        
+        return [
+            'id' => $article->id,
+            'countLikes' => $article->count_likes,
+        ];
+    }
 }
