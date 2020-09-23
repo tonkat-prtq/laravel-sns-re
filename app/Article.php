@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 // 多対1のときBelongsTo
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+// 多対多のときBelongsToMany
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Article extends Model
 {
     // strong parameter的な感じ
@@ -28,5 +31,14 @@ class Article extends Model
         // この$thisはArticleクラスのインスタンス自身
         // この下のコードでは外部キー名の省略をしている
         return $this->belongsTo('App\User'); 
+    }
+
+    public function likes(): BelongsToMany
+    {
+        // belongsToManyの第一引数には関連付けたいモデルのモデル名を渡す
+        // 第二引数には中間テーブルのテーブル名を渡す
+        // 第二引数を省略すると、2つのモデル名の単数形をアルファベット順に結合した名前であるという前提で処理され、article_userという中間テーブルを参照する
+        // しかし今回は中間テーブルの名前をlikesとしたので、第二引数にlikesを渡す必要がある
+        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
     }
 }
