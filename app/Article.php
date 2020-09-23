@@ -57,11 +57,12 @@ class Article extends Model
             : false;
     }
 
-    public function getCountLikesAttributes(): int
+    public function getCountLikesAttribute(): int
     {
         // likesメソッドで紐付いているユーザーモデルがコレクションで返る
         // この記事にいいねをしたユーザーの数をcountを使って数える
         // これによりいいねの合計が求まる
         return $this->likes->count();
     }
+
 }
