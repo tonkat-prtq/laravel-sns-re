@@ -41,4 +41,18 @@ class Article extends Model
         // しかし今回は中間テーブルの名前をlikesとしたので、第二引数にlikesを渡す必要がある
         return $this->belongsToMany('App\User', 'likes')->withTimestamps();
     }
+
+    public function isLikesBy(?User $user): bool // ?Userで$userの型がUserモデルであることを宣言しつつ、nullableな型宣言
+    {
+        return $user
+            // 三項演算子
+            // $userがnullでなければ下の1行の結果を返し、nullならfalseを返す
+            // $this->likesで、記事モデルからlikesテーブル経由で紐付けられたユーザーモデルが、コレクション形式で返ってくる
+            // コレクションではwhereメソッドを使用可能。whereメソッドの第一引数にキー名、第二引数に値を渡すと、その条件に一致するコレクションのみ返ってくる
+            // where('id', $user->id)により、記事をいいねしたユーザーの中に、引数として渡された$userがいるかどうかを調べる
+            // whereの第一引数'id' = usersテーブルのid
+            // $thisにはArticleのインスタンスが入っている?
+            ? (bool)$this->likes->where('id', $user->id)->count()
+            : false;
+    }
 }
