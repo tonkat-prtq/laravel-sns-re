@@ -20,3 +20,12 @@ Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->mi
 
 Route::resource('/articles', 'ArticleController')->only(['show']);
 // onlyを繋げるとそのアクションのみ指定することができる、Railsのonlyと同じ感じ
+
+// Route::prefix('articles')で、URIの先頭にarticlesをつける
+// ->name('articles.')で、ルーティングに名前をつける
+Route::prefix('articles')->name('articles.')->group(function() {
+  // groupメソッドを使うことで、それまでに定義した内容がgroupメソッドに無名関数として渡した各ルーティングにまとめて適用される
+  // ここではprefix('articles')とname('articles.')のこと
+  Route::put('/{article}/like', 'ArticleController@like')->name('like')->middleware('auth');
+  Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
+});
