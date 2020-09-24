@@ -79,4 +79,19 @@
       </article-like>
     </div>
   </div>
+  {{-- 記事に紐づくタグの数だけ繰り返し処理を行うためのforeach --}}
+  @foreach($article->tags as $tag)
+    @if($loop->first)
+      <div class="card-body pt-0 pb-4 pl-3">
+        <div class="card-text line-height">
+    @endif
+          {{-- 画面でタグを押すと、そのタグの付いた記事一覧を表示するためaタグを使用 --}}
+          <a href="" class="border p-1 mr-1 mt-1 text-muted">
+            {{ $tag->name }}
+          </a>
+    @if($loop->last)
+        </div>
+      </div>
+    @endif
+  @endforeach
 </div>
