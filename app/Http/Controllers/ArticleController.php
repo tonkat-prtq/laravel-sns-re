@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 use App\Article;
+use App\Tag;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 
@@ -69,6 +70,16 @@ class ArticleController extends Controller
         // user()メソッドを使うことでUserクラスのインスタンスにアクセスできるので、そこからuser.idを取得してArticleのuser_idに代入している
         $article->save();
         // モデルのsaveメソッドを使ってレコードを新規登録
+
+        $request->tags->each(function ($tagName) use ($article) {
+
+            // firstOrCreateで、渡ってきた$tagNameがTagテーブルのnameカラムの中に存在するかどうかを探し、存在すればそのモデルを、存在しなければそのレコードをテーブルに保存した上でモデルを返す
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+
+            // $tagにはタグモデルが代入されている
+            // attachで$articleに$tagのレコードを新規追加
+            $article->tags()->attach($tag);
+        });
         return redirect()->route('articles.index');
     }
 
