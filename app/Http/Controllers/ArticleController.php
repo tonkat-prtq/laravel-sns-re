@@ -89,7 +89,14 @@ class ArticleController extends Controller
     // articles/3/edit であれば、idが3であるArticleモデルのインスタンスが代入される
 
     {
-        return view('articles.edit', ['article' => $article]);
+        $tagNames = $article->tags->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
+        return view('articles.edit', [
+            'article' => $article,
+            'tagNames' => $tagNames,
+        ]);
     }
 
     public function update(ArticleRequest $request, Article $article)
