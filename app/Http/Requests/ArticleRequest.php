@@ -38,4 +38,13 @@ class ArticleRequest extends FormRequest
             'tags' => 'タグ',
         ];
     }
+
+    public function passedValidation() // フォームリクエストのバリデーションが成功したあとに自動的に呼ばれるメソッド
+    {
+        $this->tags = collect(json_decode($this->tags)) // json_decodeで、json形式の文字列であるタグ情報を連想配列に変換して、それを更にcollectでコレクションに変換している
+            ->slice(0.5) // コレクションに変換することでsliceや下のmapメソッドが使える。slice(0,5)とすることでタグの数を5個に制限している
+            ->map(function ($requestTag) {
+                return $requestTag->text; // $requestTagの中の、'text'だけ抽出して返している
+            });
+    }
 }
