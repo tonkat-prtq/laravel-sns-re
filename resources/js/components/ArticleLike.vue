@@ -6,7 +6,7 @@
     >
       <!-- ハートのアイコンがクリックされた際に、@clickでclickLikeメソッドが発火する -->
       <i class="fas fa-heart mr-1"
-        :class="{'red-text':this.isLikedBy}"
+        :class="{'red-text':this.isLikedBy, 'animated heartBeat fast':this.gotToLike}"
         @click = "clickLike"
       />
     </button>
@@ -37,6 +37,7 @@
       return {
         isLikedBy: this.initialIsLikedBy,
         countLikes: this.initialCountLikes,
+        gotToLike: false,
       }
     },
     methods: {
@@ -56,12 +57,14 @@
 
         this.isLikedBy = true
         this.countLikes = response.data.countLikes
+        this.gotToLike = true
       },
       async unlike() {
         const response = await axios.delete(this.endpoint)
 
         this.isLikedBy = false
         this.countLikes = response.data.countLikes
+        this.gotToLike = false
       },
     },
   }
