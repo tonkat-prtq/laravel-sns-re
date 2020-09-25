@@ -32,3 +32,7 @@ Route::prefix('articles')->name('articles.')->group(function() {
 
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 // 引数$nameを受け取り、それが{name}に入る
+
+Route::prefix('users')->name('users.')->group(function() {
+  Route::get('/{name}', 'UserController@show')->name('show');
+});
