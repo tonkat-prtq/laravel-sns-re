@@ -102,6 +102,14 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         $article->fill($request->all())->save();
+        // いったん記事のとタグの既存の紐付け情報を削除
+        $article->tags()->detach();
+        $request->tags->each(function ($tagName) use ($article) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            // そのあとに、リクエスト通りのタグ情報を登録しなおす
+            // そうすることで、記事更新処理でのタグ情報の付け外しを実現
+            $article->tags()->attach($tag);
+        });
         return redirect()->route('articles.index');
     }
 
