@@ -11,4 +11,9 @@ class Tag extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function getHashtagAttribute(): string // アクセサ
+    {
+        return '#' . $this->name;
+    }
 }
