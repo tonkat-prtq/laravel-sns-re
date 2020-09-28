@@ -14,10 +14,12 @@
           @if( Auth::id() !== $user->id )
           {{-- // ログイン中のuser_idと、ユーザーページに表示されるユーザーのidを比較し、不一致の場合のみフォローボタンを表示 --}}
             <follow-button
-            class="ml-auto"
-            :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'
+              class="ml-auto"
+              :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'
+              :authorized='@json(Auth::check())'
+              endpoint="{{ route('users.follow', ['name' => $user->name]) }}"
             >
-            </follor-button>
+            </follow-button>
           @endif
         </div>
         <h2 class="h5 card-title m-0">
