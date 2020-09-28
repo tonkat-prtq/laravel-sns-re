@@ -31,6 +31,19 @@ class UserController extends Controller
         ]);
     }
 
+    public function followings(string $name)
+    {
+
+        $user = User::where('name', $name)->first();
+
+        $followings = $user->followings->sortByDesc('created_at');
+
+        return view('users.followers', [
+            'user' => $user,
+            'followers' => $followers,
+        ]);
+    }
+
     public function follow(Request $request, string $name)
     {
         $user = User::where('name', $name)->first();
