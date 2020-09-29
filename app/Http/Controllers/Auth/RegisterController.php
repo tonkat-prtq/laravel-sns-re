@@ -86,4 +86,31 @@ class RegisterController extends Controller
             'token' => $token,
         ]);
     }
+
+    public function registerProviderUser(Request $request, string $provider)
+    {
+        // バリデーションの実施
+        $request->validate([
+            'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users'],
+            'token' => ['required', 'string'],
+        ]);
+
+        $token = $request->token;
+        // トークンからユーザー情報を再取得
+
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        // ユーザーモデルの作成と保存
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $providerUser->getEmail(),
+            'password' => null,
+        ]);
+
+        $this->guard()->login($user, true);
+        // ログイン処理の実行
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
 }
