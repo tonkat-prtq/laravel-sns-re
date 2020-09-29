@@ -1,8 +1,11 @@
 <?php
 
 Auth::routes();
-
 // Railsのconfig/routes.rbのようなもの
+
+Route::prefix('login')->name('login.')->group(function () {
+  Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
+});
 
 Route::get('/', 'ArticleController@index')->name('articles.index');
 
