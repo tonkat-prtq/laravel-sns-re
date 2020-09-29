@@ -8,6 +8,10 @@ Route::prefix('login')->name('login.')->group(function () {
   Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
 });
 
+Route::prefix('register')->name('register.')->group(function () {
+  Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+});
+
 Route::get('/', 'ArticleController@index')->name('articles.index');
 
 // ('/') <- 第一引数にはURLを文字列で渡す
