@@ -63,5 +63,15 @@ class LoginController extends Controller
             return $this->sendLoginResponse($request);
             // ログイン後の画面（記事一覧画面）に遷移
         }
+
+        // 以下、usersテーブルにemail情報がなかった場合の処理
+
+        return redirect()->route('register.{provider}', [
+            'provider' => $provider,
+            'email' => $providerUser->getEmail(),
+            'token' => $providerUser->token,
+            // Googleから発行されたトークンが返る
+            // このトークンがあれば、任意のタイミングでGoogleアカウントのユーザー情報を取得できる
+        ]);
     }
 }
