@@ -14,7 +14,7 @@
             @include('error_card_list')
             <div class="card-text">
               <form method="POST" 
-                action="">
+                action="{{ route('register.{provider}', ['provider' => $provider] )}}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <div class="md-form">
@@ -22,7 +22,7 @@
                   <input class="form-control" type="text" id="name" name="name" required>
                   <small>英数字3〜16文字(登録後の変更はできません)</small>
                 </div>
-                <div class="md-form">
+                <div class="md-form"> 
                   <label for="email">メールアドレス</label>
                   <input class="form-control" type="text" id="email" name="email" value="{{ $email }}" disabled>
                 </div>
