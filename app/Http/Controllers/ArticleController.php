@@ -26,7 +26,8 @@ class ArticleController extends Controller
         // YWT Questでは並び替え用のメソッドはモデルのscopeに記述してた
         // allメソッドはモデルが持つクラスメソッドで、モデルの全データをコレクションで返す
         // Laravelの場合、sortByDescはコレクションのメソッド
-        $articles = Article::all()->sortByDesc('created_at');
+        $articles = Article::all()->sortByDesc('created_at')
+            ->load(['user', 'likes', 'tags']);
 
         return view('articles.index', ['articles' => $articles]);
         // view('第一引数', ['第二引数'])
@@ -132,7 +133,8 @@ class ArticleController extends Controller
 
     public function show(Article $article)
     {
-        return view('articles.show', ['article' => $article]);
+        return view('articles.show', ['article' => $article])
+        ->load(['articles.user', 'articles.likes', 'articles.tags']);
     }
 
     // いいねをするメソッド
@@ -141,7 +143,7 @@ class ArticleController extends Controller
         // detachメソッドで最初に削除することで、いいねの多重登録を避ける
         $article->likes()->detach($request->user()->id);
         // attachメソッドで新規登録する
-        $article->likes()->attach($request->user()->id);;
+        $article->likes()->attach($request->user()->id);
 
         return [
             'id' => $article->id,
